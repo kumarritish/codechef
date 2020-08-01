@@ -1,0 +1,74 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define ll long long
+int main()
+{
+    int n;
+    cin>>n;
+    ll arr[n+1];
+    set<int> vec[6];
+    for(int i=1;i<=n;i++)
+    {
+        cin>>arr[i];
+        if(arr[i]%2 ==0)
+        vec[2].insert(i);
+        if(arr[i]%3 ==0)
+        vec[3].insert(i);
+        if(arr[i]%5 ==0)
+        vec[5].insert(i);
+        
+    }
+    int m;
+    cin>>m;
+    while(m--)
+    {
+        int type;
+        cin>>type;
+        if(type==1)
+        {
+            int l,r,p;
+            cin>>l>>r>>p;
+            vector<int> temp;
+            auto a=lower_bound(vec[p].begin(),vec[p].end(),l);
+            for(auto i=a; i!=vec[p].end();i++)
+            {
+                if(*i>r)
+                break;
+                else
+                {
+                    arr[*i]/=p;
+                    if(arr[*i]%p !=0)
+                    temp.push_back(*i);
+                }
+            }
+            for(auto i=temp.begin();i!=temp.end();i++)
+            {
+                vec[p].erase(*i);
+            }
+        }
+        else
+        {
+            int l;
+            ll d;
+            cin>>l>>d;
+            if(arr[l]%2 ==0)
+            vec[2].erase(l);
+            if(arr[l]%3==0)
+            vec[3].erase(l);
+            if(arr[l]%5 ==0)
+            vec[5].erase(l);
+            
+            arr[l]=d;
+            
+            if(d%2==0)
+            vec[2].insert(l);
+            if(d%3==0)
+            vec[3].insert(l);
+            if(d%5==0)
+            vec[5].insert(l);
+            
+        }
+    }
+    for(int i=1;i<=n;i++)
+    cout<<arr[i]<<" ";
+}
